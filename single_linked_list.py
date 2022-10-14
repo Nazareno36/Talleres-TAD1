@@ -1,4 +1,4 @@
-
+from colorama import*
 class SingleLinkedList:
     
     class Node:
@@ -15,9 +15,10 @@ class SingleLinkedList:
     def print_values(self):
         current_node = self.head
         while current_node != None:
+            Fore.YELLOW
             print(current_node.value)
             current_node = current_node.next
-        print(self.len)
+        print(Fore.CYAN + f'longitud = {self.len}')
     
     def to_list(self):
         list = []
@@ -85,14 +86,14 @@ class SingleLinkedList:
         if node != None:
             return node.value
         else:
-            print('Index out of range')
+            return 'Index out of range'
     
     def update_value(self,index,value):
         node = self.get_node_at(index)
         if node != None:
             node.value = value
         else:
-            print('Indext out of range')
+            return 'Index out of range'
     
     def remove_node(self,index):
         if index == 1:
@@ -107,8 +108,8 @@ class SingleLinkedList:
                 previous_node.next = next_node
                 self.len -= 1
             else:
-                print('Index out of range')
-    
+                return 'Index out of range'
+
     def insert_node(self,index,value):
         if index == 1:
             self.unshift(value)
@@ -122,7 +123,7 @@ class SingleLinkedList:
                 previous_node.next.next = index_node
                 self.len += 1
             else:
-                print('Index out of range')
+                return 'Index out of range'
     
     def reverse(self):
         counter = 1
