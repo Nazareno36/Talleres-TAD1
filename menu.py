@@ -1,3 +1,4 @@
+from os import link
 from single_linked_list import SingleLinkedList as SLL
 from double_linked_list import DoubleLinkedList as DLL
 from colorama import*
@@ -12,6 +13,42 @@ def input_integer(mensaje):
         except:
             print('Se esperaba un valor numerico')
 
+def insert_menu(linked_list):
+    while True:
+        print(Fore.RED + '1. Al inicio\n2. Al final\n3. En una posición especifica\n')
+        choose = input_integer('--> ')
+        value = input_integer('Insertar con valor? --> ')
+        if choose == 1:
+            linked_list.unshift(value)
+            break
+        elif choose == 2:
+            linked_list.push_back(value)
+            break
+        elif choose == 3:
+            index = input_integer('Insertar nodo en la posición? --> ')
+            linked_list.insert_node(index, value)
+            break
+        else:
+            print(Fore.RED + 'Opcion invalida, por favor vuelve a ingresar una opción\n')
+            input()
+
+def remove_menu(linked_list):
+    while True:
+        print(Fore.RED + '1. Al inicio\n2. Al final\n3. En una posición especifica\n')
+        choose = input_integer('--> ')
+        if choose == 1:
+            linked_list.shift_node()
+            break
+        elif choose == 2:
+            linked_list.pop_node()
+            break
+        elif choose == 3:
+            index = input_integer('Eliminar nodo en la posición? --> ')
+            linked_list.remove_node(index)
+            break
+        else:
+            print(Fore.RED + 'Opcion invalida, por favor vuelve a ingresar una opción\n')
+            input()
 
 
 def sub_menu(linked_list):
@@ -20,13 +57,10 @@ def sub_menu(linked_list):
         print('a. Añadir nodo\nb. Eliminar nodo\nc. Consultar valor contenido en el nodo\nd. Modificar valor de nodo\ne. Invertir toda la lista\nf. Validación especial\ng. salir\n')
         choose = input('--> ')
         if choose == 'a':
-            index = input_integer('Insertar nodo en la posición? --> ')
-            value = input_integer('Insertar con valor? --> ')
-            linked_list.insert_node(index, value)
+            insert_menu(linked_list)
             input()
         elif choose == 'b':
-            index = input_integer('Eliminar en la posición? --> ')
-            linked_list.remove_node(index)
+            remove_menu(linked_list)
             input()
         elif choose == 'c':
             index = input_integer('consultar valor en la posicion? --> ')
@@ -48,7 +82,7 @@ def sub_menu(linked_list):
             print(Fore.WHITE + 'Esos es todo entonces, Hasta luego!')
             break
         else:
-            print(Fore.RED + 'Opcion invalida, por favor vuelve a ingrasar una opción\n')
+            print(Fore.RED + 'Opcion invalida, por favor vuelve a ingresar una opción\n')
             input()
 
 
@@ -71,4 +105,4 @@ def display_menu():
             print(Fore.WHITE + 'Esos es todo entonces, Hasta luego!')
             break
         else:
-            print(Fore.RED + 'Opcion invalida, por favor vuelve a ingrasar una opción\n')
+            print(Fore.RED + 'Opcion invalida, por favor vuelve a ingresar una opción\n')
