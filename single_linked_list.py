@@ -27,6 +27,25 @@ class SingleLinkedList:
             list.append(current_node.value)
             current_node = current_node.next
     
+    def is_in_list(self,value):
+        current_node = self.head
+        found = False
+        while current_node != None and (not found):
+            found = current_node.value == value
+            current_node = current_node.next
+        return found
+
+    def push_back_v2(self, value):
+        if(self.is_in_list(value)): return 'repited value'
+        node = self.Node(value)
+        if self.head == None:
+            self.head = node
+            self.tail = node
+        else:
+            self.tail.next = node
+            self.tail = node
+        self.len +=1
+
     def push_back(self, value):
         node = self.Node(value)
         if self.head == None:
@@ -36,8 +55,21 @@ class SingleLinkedList:
             self.tail.next = node
             self.tail = node
         self.len +=1
+        return 'succesful'
     
     def unshift(self, value):
+        if(self.is_in_list(value)): return 'repited value'
+        node = self.Node(value)
+        if self.head == None:
+            self.head = node
+            self.tail = node
+        else:
+            node.next = self.head
+            self.head = node
+        self.len +=1
+        return 'succesful'
+    
+    def unshift_v2(self, value):
         node = self.Node(value)
         if self.head == None:
             self.head = node
@@ -53,6 +85,8 @@ class SingleLinkedList:
             self.head = removed_node.next
             removed_node.next = None
             self.len-=1
+            return 'succesful'
+        return 'Empty list'
     
     def pop_node(self):
         if self.len == 1:
@@ -67,6 +101,8 @@ class SingleLinkedList:
             previos_node.next = None
             self.tail = previos_node
             self.len -= 1
+            return 'succesful'
+        return 'Empty list'
     
     def get_node_at(self,index):
         if index == self.len:
@@ -89,46 +125,74 @@ class SingleLinkedList:
             return 'Index out of range'
     
     def update_value(self,index,value):
+        if(self.is_in_list(value)): return 'repited value'
         node = self.get_node_at(index)
         if node != None:
             node.value = value
+            return 'Succesful'
         else:
             return 'Index out of range'
     
     def remove_node(self,index):
         if index == 1:
-            self.shift_node()
+            return self.shift_node()
         elif index == self.len:
-            self.pop_node()
+            return self.pop_node()
         else:
             previous_node = self.get_node_at(index-1)
-            if previous_node .next != None:    
+            if previous_node != None and previous_node.next != None:    
                 next_node = (previous_node.next).next
                 previous_node.next = None
                 previous_node.next = next_node
                 self.len -= 1
+                return 'succesful'
             else:
                 return 'Index out of range'
 
     def insert_node(self,index,value):
+        if(self.is_in_list(value)): return 'repited value'
         if index == 1:
             self.unshift(value)
         elif index == self.len+1:
             self.push_back(value)
         else:
             previous_node = self.get_node_at(index-1)
-            if previous_node != None:
+            if previous_node != None and previous_node.next != None:
                 index_node = previous_node.next
                 previous_node.next = self.Node(value)
                 previous_node.next.next = index_node
                 self.len += 1
+                return 'succesful'
+            else:
+                return 'Index out of range'
+
+    def insert_node_v2(self,index,value):
+        if index == 1:
+            self.unshift_v2(value)
+        elif index == self.len+1:
+            self.push_back_v2(value)
+        else:
+            previous_node = self.get_node_at(index-1)
+            if previous_node != None and previous_node.next != None:
+                index_node = previous_node.next
+                previous_node.next = self.Node(value)
+                previous_node.next.next = index_node
+                self.len += 1
+                return 'succesful'
             else:
                 return 'Index out of range'
     
     def reverse(self):
         counter = 1
         while counter <  self.len:
-            self.insert_node(counter,self.tail.value)
+            self.insert_node_v2(counter,self.tail.value)
+            self.pop_node()
+            counter+=1
+    
+    def especial_reverse(self):
+        counter = 1
+        while counter <  self.len:
+            self.insert_node_v2(counter,pow(self.tail.value,0.5))
             self.pop_node()
             counter+=1
     
