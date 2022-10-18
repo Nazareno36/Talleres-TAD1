@@ -35,17 +35,6 @@ class SingleLinkedList:
             current_node = current_node.next
         return found
 
-    def push_back_v2(self, value):
-        if(self.is_in_list(value)): return 'repited value'
-        node = self.Node(value)
-        if self.head == None:
-            self.head = node
-            self.tail = node
-        else:
-            self.tail.next = node
-            self.tail = node
-        self.len +=1
-
     def push_back(self, value):
         node = self.Node(value)
         if self.head == None:
@@ -68,16 +57,6 @@ class SingleLinkedList:
             self.head = node
         self.len +=1
         return 'succesful'
-    
-    def unshift_v2(self, value):
-        node = self.Node(value)
-        if self.head == None:
-            self.head = node
-            self.tail = node
-        else:
-            node.next = self.head
-            self.head = node
-        self.len +=1
 
     def shift_node(self):
         if self.head != None:
@@ -165,34 +144,25 @@ class SingleLinkedList:
                 return 'succesful'
             else:
                 return 'Index out of range'
-
-    def insert_node_v2(self,index,value):
-        if index == 1:
-            self.unshift_v2(value)
-        elif index == self.len+1:
-            self.push_back_v2(value)
-        else:
-            previous_node = self.get_node_at(index-1)
-            if previous_node != None and previous_node.next != None:
-                index_node = previous_node.next
-                previous_node.next = self.Node(value)
-                previous_node.next.next = index_node
-                self.len += 1
-                return 'succesful'
-            else:
-                return 'Index out of range'
     
     def reverse(self):
-        counter = 1
-        while counter <  self.len:
-            self.insert_node_v2(counter,self.tail.value)
-            self.pop_node()
-            counter+=1
-    
+        previous_node = None
+        current_node = self.head
+        while current_node != None:
+            next_node = current_node.next
+            current_node.next = previous_node
+            previous_node = current_node
+            current_node = next_node
+        self.head = previous_node
+
     def especial_reverse(self):
-        counter = 1
-        while counter <  self.len:
-            self.insert_node_v2(counter,pow(self.tail.value,0.5))
-            self.pop_node()
-            counter+=1
+        previous_node = None
+        current_node = self.head
+        while current_node != None:
+            next_node = current_node.next
+            current_node.next = previous_node
+            previous_node = current_node
+            previous_node.value = pow(previous_node.value,0.5)
+            current_node = next_node
+        self.head = previous_node
     
